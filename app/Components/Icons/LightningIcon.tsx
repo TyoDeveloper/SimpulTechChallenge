@@ -1,13 +1,20 @@
 "use client";
+import React from "react";
 
 type Props = {
   size?: number;
   className?: string;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+
 };
 
-export default function LightningIcon({ size = 56, className = "" }: Props) {
+export default function LightningIcon({ size = 56, className = "", onMouseEnter, onMouseLeave }: Props) {
+
   return (
     <div
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       style={{ width: size, height: size }}
       className={`
         flex items-center justify-center
