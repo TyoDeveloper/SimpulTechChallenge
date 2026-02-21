@@ -12,10 +12,9 @@ export default function FloatingMenu() {
   const [isHoverable, setIsHoverable] = useState(true);
   const [isTaskMode, setIsTaskMode] = useState(false);
   const [isInboxMode, setIsInboxMode] = useState(false);
+  const [additionalClassName, setAdditionalClassName] = useState("");
 
   const [selectedChat, setSelectedChat] = useState<number | null>(null);
-
-  let additionalClassName: string = "";
 
   const TaskIconClick = () => {
     setIsTaskMode(true);
@@ -25,7 +24,7 @@ export default function FloatingMenu() {
   };
 
   const InboxIconClick = () => {
-    additionalClassName = "translate-x-full transition-all duration-500 ease-in-out";
+    setAdditionalClassName("translate-x-full transition-all duration-500 ease-in-out");
     setIsTaskMode(false);
     setIsInboxMode(true);
     setIsHoverable(false);
@@ -68,19 +67,20 @@ export default function FloatingMenu() {
           </div>
         ) : isTaskMode ? (
           <>
-            <div className="h-screen relative">
-              <div className="h-screen flex items-center justify-center">
-                <TaskList />
-              </div>
-              <div className="flex ">
-                <InboxIcon
-                  onclick={InboxIconClick}
-                  InboxMode={isInboxMode}
-                  size={isInboxMode ? 68 : 60}
-                  className={`mr-[31] ${additionalClassName}`}
-                />
-                <TaskIcon TaskMode={isTaskMode} size={isTaskMode ? 68 : 60} />
-              </div>
+            {/* Panel */}
+            <div className="absolute right-20 bottom-20">
+              <TaskList />
+            </div>
+
+            {/* Icon Group */}
+            <div className="flex items-center">
+              <InboxIcon
+                onclick={InboxIconClick}
+                InboxMode={isInboxMode}
+                size={isInboxMode ? 68 : 60}
+                className="mr-6"
+              />
+              <TaskIcon TaskMode={isTaskMode} size={isTaskMode ? 68 : 60} />
             </div>
           </>
         ) : isInboxMode ? (
