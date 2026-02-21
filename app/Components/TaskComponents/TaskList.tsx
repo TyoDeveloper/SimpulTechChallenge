@@ -32,7 +32,7 @@ export default function TaskList() {
   };
 
   return (
-    <div className="bg-[#EDEDED] w-[500px] rounded-md shadow-md p-4">
+    <div className="bg-[#EDEDED] w-[520px] rounded-md shadow-md p-4">
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
         <select className="border px-3 py-1 text-sm rounded-md bg-white">

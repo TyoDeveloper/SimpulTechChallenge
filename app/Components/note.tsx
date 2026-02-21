@@ -1,71 +1,47 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import LightningIcon from "./Icons/LightningIcon";
 import TaskIcon from "./Icons/TaskIcon";
 import InboxIcon from "./Icons/InboxIcon";
 import ChatList from "./ChatComponents/ChatList";
 import ChatModal from "./ChatComponents/ChatModal";
 import TaskList from "./TaskComponents/TaskList";
-import LoadingPanel from "./Common/LoadingPanel";
 
 type Mode = "hover" | "task" | "inbox";
 
 export default function FloatingMenu() {
   const [mode, setMode] = useState<Mode>("hover");
   const [selectedChat, setSelectedChat] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
 
-  const openTask = () => {
-    setMode("task");
-    simulateLoading();
-  };
-
-  const openInbox = () => {
-    setMode("inbox");
-    simulateLoading();
-  };
-
-  const simulateLoading = () => {
-    setLoading(true);
-
-    // Simulasi request server
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500);
-  };
-
-  const backToHover = () => {
-    setMode("hover");
-    setSelectedChat(null);
-  };
+  const openTask = () => setMode("task");
+  const openInbox = () => setMode("inbox");
 
   return (
     <div className="fixed bottom-8 right-8 z-50">
       <div className="relative">
         {/* ================= PANEL ================= */}
-        {mode !== "hover" && (
-          <div className="absolute bottom-24 right-0 transition-all duration-300 ease-in-out">
-            {loading ? (
-              <LoadingPanel
-                text={mode === "task" ? "Loading Task List ..." : "Loading Chats ..."}
-              />
-            ) : mode === "task" ? (
-              <TaskList />
-            ) : (
-              <>
-                <ChatList onSelect={setSelectedChat} />
-                {selectedChat && (
-                  <ChatModal chatId={selectedChat} onClose={() => setSelectedChat(null)} />
-                )}
-              </>
+
+        {mode === "task" && (
+          <div className="absolute bottom-24 right-0">
+            <TaskList />
+          </div>
+        )}
+
+        {mode === "inbox" && (
+          <div className="absolute bottom-24 right-0">
+            <ChatList onSelect={setSelectedChat} />
+            {selectedChat && (
+              <ChatModal chatId={selectedChat} onClose={() => setSelectedChat(null)} />
             )}
           </div>
         )}
 
         {/* ================= ICON AREA ================= */}
+
         {mode === "hover" && (
           <div className="flex group relative">
+            {/* TASK ICON (Hover Animation) */}
             <TaskIcon
               onclick={openTask}
               size={60}
@@ -79,6 +55,7 @@ export default function FloatingMenu() {
               "
             />
 
+            {/* INBOX ICON (Hover Animation) */}
             <InboxIcon
               onclick={openInbox}
               size={60}
@@ -95,18 +72,12 @@ export default function FloatingMenu() {
             <LightningIcon size={68} />
           </div>
         )}
+
         {mode === "task" && (
           <div className="flex items-center gap-6">
             <InboxIcon onclick={openInbox} size={60} />
 
-            <TaskIcon
-              onclick={() => {
-                openTask();
-                backToHover();
-              }}
-              TaskMode
-              size={68}
-            />
+            <TaskIcon onclick={openTask} TaskMode size={68} />
           </div>
         )}
 
@@ -114,14 +85,7 @@ export default function FloatingMenu() {
           <div className="flex items-center gap-6">
             <TaskIcon onclick={openTask} size={60} />
 
-            <InboxIcon
-              onclick={() => {
-                openInbox();
-                backToHover();
-              }}
-              InboxMode
-              size={68}
-            />
+            <InboxIcon onclick={openInbox} InboxMode size={68} />
           </div>
         )}
       </div>
