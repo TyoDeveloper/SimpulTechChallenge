@@ -59,7 +59,7 @@ export default function FloatingMenu() {
                 group-hover:opacity-100
               "
             />
-            <LightningIcon size={68} onMouseEnter={null} onMouseLeave={null} />
+            <LightningIcon size={68} />
           </>
         ) : isTaskMode ? (
           <>
