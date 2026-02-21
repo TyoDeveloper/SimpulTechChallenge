@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import ChatHeader from "../Components/ChatComponent/ChatHeader";
-import ChatMessage from "../Components/ChatComponent/ChatMessage";
-import DateDivider from "../Components/ChatComponent/DateDevider";
-import NewMessageDivider from "../Components/ChatComponent/NewMessageDevider";
+import ChatHeader from "./ChatHeader";
+import ChatMessage from "./ChatMessage";
+import DateDivider from "./DateDevider";
+import NewMessageDivider from "./NewMessageDevider";
 
 export default function ChatModal({ chatId, onClose }: { chatId: number; onClose: () => void }) {
   const [messages, setMessages] = useState<any[]>([]);

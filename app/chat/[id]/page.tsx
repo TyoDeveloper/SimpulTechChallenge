@@ -2,10 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
-import ChatHeader from "../../Components/ChatComponent/ChatHeader";
-import ChatMessage from "../../Components/ChatComponent/ChatMessage";
-import DateDivider from "../../Components/ChatComponent/DateDevider";
-import NewMessageDivider from "../../Components/ChatComponent/NewMessageDevider";
+import ChatHeader from "../../Components/ChatComponents/ChatHeader";
+import ChatMessage from "../../Components/ChatComponents/ChatMessage";
+import DateDivider from "../../Components/ChatComponents/DateDevider";
+import NewMessageDivider from "../../Components/ChatComponents/NewMessageDevider";
 
 export default function ChatRoom() {
   const { id } = useParams();

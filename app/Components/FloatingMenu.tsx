@@ -4,8 +4,9 @@ import { useState } from "react";
 import LightningIcon from "./Icons/LightningIcon";
 import TaskIcon from "./Icons/TaskIcon";
 import InboxIcon from "./Icons/InboxIcon";
-import ChatList from "./ChatList";
-import ChatModal from "./ChatModal";
+import ChatList from "./ChatComponents/ChatList";
+import ChatModal from "./ChatComponents/ChatModal";
+import TaskList from "./TaskComponents/TaskList";
 
 export default function FloatingMenu() {
   const [isHoverable, setIsHoverable] = useState(true);
@@ -30,9 +31,6 @@ export default function FloatingMenu() {
     setIsHoverable(false);
     isTaskMode && (setIsTaskMode(false), setIsInboxMode(true));
   };
-
-  console.log(`TaskMode = ${isTaskMode}, InboxMode = ${isInboxMode}`);
-
   return (
     <div className="fixed bottom-8 right-8">
       <div className={`relative items-center group`}>
@@ -70,14 +68,19 @@ export default function FloatingMenu() {
           </div>
         ) : isTaskMode ? (
           <>
-            <div className="flex">
-              <InboxIcon
-                onclick={InboxIconClick}
-                InboxMode={isInboxMode}
-                size={isInboxMode ? 68 : 60}
-                className={`mr-[31] ${additionalClassName}`}
-              />
-              <TaskIcon TaskMode={isTaskMode} size={isTaskMode ? 68 : 60} />
+            <div className="h-screen relative">
+              <div className="h-screen flex items-center justify-center">
+                <TaskList />
+              </div>
+              <div className="flex ">
+                <InboxIcon
+                  onclick={InboxIconClick}
+                  InboxMode={isInboxMode}
+                  size={isInboxMode ? 68 : 60}
+                  className={`mr-[31] ${additionalClassName}`}
+                />
+                <TaskIcon TaskMode={isTaskMode} size={isTaskMode ? 68 : 60} />
+              </div>
             </div>
           </>
         ) : isInboxMode ? (
@@ -90,7 +93,9 @@ export default function FloatingMenu() {
 
               {/* Modal */}
               {selectedChat && (
-                <ChatModal chatId={selectedChat} onClose={() => setSelectedChat(null)} />
+                <div className="absolute right-10 top-[233]">
+                  <ChatModal chatId={selectedChat} onClose={() => setSelectedChat(null)} />
+                </div>
               )}
             </div>
             <div className="flex">

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import FloatingMenu from "./Components/FloatingMenu";
-import ChatList from "./Components/ChatList";
-import ChatModal from "./Components/ChatModal";
+import ChatList from "./Components/ChatComponents/ChatList";
+import ChatModal from "./Components/ChatComponents/ChatModal";
 
 export default async function Home() {
   return (
