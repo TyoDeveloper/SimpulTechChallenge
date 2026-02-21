@@ -4,11 +4,16 @@ import { useState } from "react";
 import LightningIcon from "./Icons/LightningIcon";
 import TaskIcon from "./Icons/TaskIcon";
 import InboxIcon from "./Icons/InboxIcon";
+import ChatList from "./ChatList";
+import ChatModal from "./ChatModal";
 
 export default function FloatingMenu() {
   const [isHoverable, setIsHoverable] = useState(true);
   const [isTaskMode, setIsTaskMode] = useState(false);
   const [isInboxMode, setIsInboxMode] = useState(false);
+
+  const [selectedChat, setSelectedChat] = useState<number | null>(null);
+
   let additionalClassName: string = "";
 
   const TaskIconClick = () => {
@@ -26,12 +31,14 @@ export default function FloatingMenu() {
     isTaskMode && (setIsTaskMode(false), setIsInboxMode(true));
   };
 
+  console.log(`TaskMode = ${isTaskMode}, InboxMode = ${isInboxMode}`);
+
   return (
     <div className="fixed bottom-8 right-8">
-      <div className="relative flex items-center group">
+      <div className={`relative items-center group`}>
         {/* MAIN BUTTON */}
         {isHoverable ? (
-          <>
+          <div className="flex">
             <TaskIcon
               onclick={TaskIconClick}
               size={60}
@@ -60,26 +67,41 @@ export default function FloatingMenu() {
               "
             />
             <LightningIcon size={68} />
-          </>
+          </div>
         ) : isTaskMode ? (
           <>
-            <InboxIcon
-              onclick={InboxIconClick}
-              InboxMode={isInboxMode}
-              size={isInboxMode ? 68 : 60}
-              className={`mr-[31] ${additionalClassName}`}
-            />
-            <TaskIcon TaskMode={isTaskMode} size={isTaskMode ? 68 : 60} />
+            <div className="flex">
+              <InboxIcon
+                onclick={InboxIconClick}
+                InboxMode={isInboxMode}
+                size={isInboxMode ? 68 : 60}
+                className={`mr-[31] ${additionalClassName}`}
+              />
+              <TaskIcon TaskMode={isTaskMode} size={isTaskMode ? 68 : 60} />
+            </div>
           </>
         ) : isInboxMode ? (
           <>
-            <TaskIcon
-              onclick={TaskIconClick}
-              TaskMode={isTaskMode}
-              size={isTaskMode ? 68 : 60}
-              className="mr-[31]"
-            />
-            <InboxIcon InboxMode={isInboxMode} size={isInboxMode ? 68 : 60} />
+            <div className="h-screen relative">
+              {/* Chat List Panel */}
+              <div className="absolute right-10 top-[233]">
+                <ChatList onSelect={setSelectedChat} />
+              </div>
+
+              {/* Modal */}
+              {selectedChat && (
+                <ChatModal chatId={selectedChat} onClose={() => setSelectedChat(null)} />
+              )}
+            </div>
+            <div className="flex">
+              <TaskIcon
+                onclick={TaskIconClick}
+                TaskMode={isTaskMode}
+                size={isTaskMode ? 68 : 60}
+                className="mr-[31]"
+              />
+              <InboxIcon InboxMode={isInboxMode} size={isInboxMode ? 68 : 60} />
+            </div>
           </>
         ) : null}
       </div>

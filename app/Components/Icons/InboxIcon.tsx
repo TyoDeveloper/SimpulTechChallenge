@@ -15,8 +15,6 @@ export default function InboxIcon({
   className = "",
   label = "",
 }: Props) {
-  console.log("InboxMode = ", InboxMode);
-
   return (
     <div onClick={onclick} className="relative flex items-center justify-center">
       {/* LABEL */}
