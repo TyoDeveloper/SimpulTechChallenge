@@ -10,7 +10,7 @@ export default async function Home() {
         <div className="fixed top-0 left-0 w-full bg-blue-500 overflow-hidden h-12 flex items-center">
           <div className="marquee text-white text-lg font-semibold">
             Simpul Tech Challenge - Ketika Lighning icon disorot muncul Task Icon dan Inbox Icon,
-            ketika masing-masing di klik mengaktifkan mode nya masing-masing, ketika mode yang
+            ketika masing-masing icon di klik mengaktifkan mode nya masing-masing, ketika mode yang
             sedang aktif di klik maka kembali ke mode awal{" "}
           </div>
         </div>
